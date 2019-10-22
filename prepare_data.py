@@ -23,7 +23,7 @@ del wheater
 print(columns)
 prepared_train = pd.DataFrame(columns = columns)
 
-# print(building_metadata[1])
+# print(building_metadata[1])prepared_train
 for column in train.columns:
 	prepared_train[column] = train[column]
 
@@ -35,7 +35,8 @@ primary_uses = []
 square_feets = []
 year_builts = []
 floor_count = []
-for building_id in prepared_train['building_id']:
+i = 0
+for building_id in prepared_train['building_id'].values:
 	x = building_metadata.loc[building_metadata['building_id'] == building_id]
 	# print(x)
 	# print(building_id,x['site_id'])
@@ -43,9 +44,10 @@ for building_id in prepared_train['building_id']:
 	primary_uses.append(x['primary_use'].values.item())
 	square_feets.append(x['square_feet'].values.item())
 	year_builts.append(x['year_built'].values.item())
-	floor_count.append(x['floor_count'].values.item()) 
-	# if i % 100 == 0:
-		# print(site_ids, primary_uses, square_feets, year_builts, floor_count)
+	floor_count.append(x['floor_count'].values.item())
+	i += 1 
+	if i % 10000 == 0:
+		print(i)
 		
 
 prepared_train['site_id'] = site_ids
