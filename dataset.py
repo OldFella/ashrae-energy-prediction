@@ -79,3 +79,4 @@ class AshraeDataset(Dataset):
 		data = torch.Tensor(data)
 		target = torch.Tensor(np.array([target]))
 		return data, target
+
