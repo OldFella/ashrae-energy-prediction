@@ -98,7 +98,7 @@ class AshraeDataset(Dataset):
 		building_id_list = self.energy_frame['building_id'].values
 		idxs = self.energy_frame.index[self.energy_frame['building_id'] == b_id].tolist()
 		sequence_length = len(idxs)
-		print(sequence_length)
+		# print(sequence_length)
 		start = 0
 		if random_start:
 			start = np.random.randint(0,sequence_length)
@@ -110,8 +110,8 @@ class AshraeDataset(Dataset):
 			if current_building == sequence_end or current_building >= len(idxs):
 				break
 			current_data, current_target = self.__getitem__(idxs[current_building])
-			data.append(current_data.numpy())
-			target.append(current_target.numpy())
+			data.append([current_data.numpy()])
+			target.append([current_target.numpy()])
 			# print(data, target)
 		return torch.Tensor(np.array(data)), torch.Tensor(np.array(target))
 
@@ -121,4 +121,4 @@ class AshraeDataset(Dataset):
 # # for x in range(1000):
 # print('-')
 # x = d.getbuildingdata(1,random_start = True, length = 10000000000)
-# print(x, len(x[0]))
+# print(x[0][0], len(x[0]))
