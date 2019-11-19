@@ -17,7 +17,7 @@ import numpy as np
 
 
 
-def train(model = None, criterion = None, training_epochs = 1, batch_size = 4, learning_rate = 0.001):
+def train(model = None, criterion = None, training_epochs = 1, batch_size = 1, learning_rate = 0.001):
 	""" 
 	Runs through the training data, makes a prediction and computes loss, then backpropagates
 	the result through the model and adjusts the weights and biases until a local minimum in the loss
@@ -32,18 +32,19 @@ def train(model = None, criterion = None, training_epochs = 1, batch_size = 4, l
 
 	best_model = None
 
+	dataset = AshraeDataset('train.csv', 'building_metadata.csv', 'weather_train.csv')
+
 	threshold = 0
 
 	for epoch in range(training_epochs):
 		running_loss = 0.0
-
-		dataset = AshraeDataset('train.csv', 'building_metadata.csv', 'weather_train.csv')
 		training_loader = DataLoader(dataset, batch_size = batch_size)
 		average_loss = 0
 		print('')
 		number_of_files = len(training_loader.dataset)
+		print(len(training_loader))
 		for i, data in enumerate(training_loader, 0):
-			if i == 100000:
+			if i == 10:
 				break
 
 			# get input for training
@@ -70,7 +71,7 @@ def train(model = None, criterion = None, training_epochs = 1, batch_size = 4, l
 			running_loss += loss.item()
 
 			# pretty print progress
-			if i % 100 == 99:  # append a the average of the last 10 losses as point to the loss/epoch graph_loss
+			if i % 10 == 9:  # append a the average of the last 10 losses as point to the loss/epoch graph_loss
 				average_loss = running_loss/10
 				print(i, average_loss)
 				# graph_loss.append((epoch + i/(number_of_files/batch_size), average_loss))
